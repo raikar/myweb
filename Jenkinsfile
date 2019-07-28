@@ -43,9 +43,6 @@ pipeline {
     steps {
      sh "docker login -u raikar -p ${dockerHubPassword}"
      }
-    steps {
-     sh 'docker push raikar/my-app:2.0.1'
-    }
    }
    stage('Docker Scan using Clair'){
     steps {
