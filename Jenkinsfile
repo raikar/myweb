@@ -12,20 +12,21 @@ pipeline {
     }
    }
    stage('Security'){
-   stage('Maven Package and create CycloneDX BOM'){
-    steps {
-     sh "mvn clean install package org.cyclonedx:cyclonedx-maven-plugin:makeAggregateBom"
+    parallel {
+     stage('Maven Package and create CycloneDX BOM'){
+      steps {
+      sh "mvn clean install package org.cyclonedx:cyclonedx-maven-plugin:makeAggregateBom"
+     }
     }
-   }
-   stage('Dependency Check & Track') {
-    steps {
+    stage('Dependency Check & Track') {
+     steps {
           sh 'mvn org.owasp:dependency-check-maven:check -Dformat=XML -DdataDirectory=/usr/share/nvd -DautoUpdate=false'
           dependencyTrackPublisher artifact: 'target/bom.xml', artifactType: 'bom', failedNewCritical: 1, failedTotalCritical: 1, projectId: 'b15cc415-cf8f-455b-b567-5119f997ad29', synchronous: true, unstableNewCritical: 1, unstableTotalCritical: 1
      }
     }
-   stage('SonarQube analysis') {
-    steps {
-    withSonarQubeEnv('Sonar-6') {
+    stage('SonarQube analysis') {
+     steps {
+      withSonarQubeEnv('Sonar-6') {
       sh 'mvn sonar:sonar'
      }
     } 
