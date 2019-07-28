@@ -28,6 +28,7 @@ pipeline {
      steps {
       withSonarQubeEnv('Sonar-6') {
       sh 'mvn sonar:sonar'
+      }
      }
     } 
    }
