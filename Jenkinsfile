@@ -51,10 +51,7 @@ pipeline {
    }
    stage('Docker Scan using Clair'){
     steps {
-     def DockerRun = './clair-scanner --ip=172.17.0.1 raikar/my-app:2.0.1 || exit 0'
-     sshagent(['rajeshPvtKeyforCentOS']) {
     sh "ssh -o StrictHostKeyChecking=no rajesh@192.168.254.4 ${DockerRun}"
-     }
     }
    }
    stage('Run Container on Dev Server'){
