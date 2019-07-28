@@ -2,10 +2,14 @@ pipeline {
  agent any
   stages {
    stage('SCM Checkout'){
+    steps {
        git credentialsId: 'git-creds', url: 'https://github.com/raikar/my-app.git'
+    }
    }
    stage('Maven Test'){
+    steps {
      sh "mvn test"
+    }
    }
    stage('Maven Package and create CycloneDX BOM'){
      sh "mvn clean install package org.cyclonedx:cyclonedx-maven-plugin:makeAggregateBom"
