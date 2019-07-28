@@ -59,12 +59,7 @@ pipeline {
    }
    stage ('Check using Gauntlt'){
     steps {
-     def DockerRun = '/usr/local/bin/gauntlt-docker gauntlt-docker/examples/xss.attack'
-     sshagent(['rajeshPvtKeyforCentOS']) {
-      steps {
      sh "ssh -o StrictHostKeyChecking=no rajesh@192.168.254.3 ${DockerRun}"
-      }
-     }
     }
    }
    stage ('Check using ZAP'){
