@@ -81,5 +81,4 @@ pipeline {
      tokenCredentialId: 'slack-new-token'
     }
    }
-  }
 }
