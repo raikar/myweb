@@ -41,10 +41,8 @@ pipeline {
    }
    stage('Push Docker Image'){
     steps {
-     withCredentials([string(credentialsId: 'docker-password', variable: 'dockerHubPassword')]) {
      sh "docker login -u raikar -p ${dockerHubPassword}"
      }
-    }
     steps {
      sh 'docker push raikar/my-app:2.0.1'
     }
@@ -56,10 +54,7 @@ pipeline {
    }
    stage('Run Container on Dev Server'){
     steps {
-     def DockerRun = 'docker run -p 8080:8080 -d --name rajesh-app-name raikar/my-app:2.0.1'
-     sshagent(['rajeshPvtKeyforCentOS']) {
     sh "ssh -o StrictHostKeyChecking=no rajesh@192.168.254.3 ${DockerRun}"
-     }
     }
    }
    stage ('Check using Gauntlt'){
