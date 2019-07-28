@@ -74,10 +74,7 @@ pipeline {
    }
    stage ('Check using ZAP'){
     steps {
-     def DockerRun = 'docker  run -t owasp/zap2docker-weekly zap-baseline.py -I -t http://192.168.254.3:8080/myweb-0.0.5/'
-     sshagent(['rajeshPvtKeyforCentOS']) {
      sh "ssh -o StrictHostKeyChecking=no rajesh@192.168.254.3 ${DockerRun}"
-      }
      }
     }
    stage ('Slack Notification'){
