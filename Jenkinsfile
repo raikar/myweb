@@ -11,6 +11,7 @@ pipeline {
      sh "mvn test"
     }
    }
+   stage('Security'){
    stage('Maven Package and create CycloneDX BOM'){
     steps {
      sh "mvn clean install package org.cyclonedx:cyclonedx-maven-plugin:makeAggregateBom"
@@ -34,6 +35,7 @@ pipeline {
       echo "hello"
       }
     }
+   }
    stage('Build Docker Image'){
     steps {
      sh 'docker build -t raikar/my-app:2.0.1 .'
